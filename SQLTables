@@ -1,0 +1,225 @@
+USE [Team:)]
+GO
+
+/****** Object:  Table [dbo].[Block_list]    Script Date: 9/29/2024 8:12:02 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Block_list](
+	[UserID_blocker] [int] NOT NULL,
+	[UserID_blocked] [int] NOT NULL,
+ CONSTRAINT [PK_Block_list] PRIMARY KEY CLUSTERED 
+(
+	[UserID_blocker] ASC,
+	[UserID_blocked] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Block_list]  WITH CHECK ADD  CONSTRAINT [FK_Block_list_User] FOREIGN KEY([UserID_blocker])
+REFERENCES [dbo].[User] ([UserID])
+GO
+
+ALTER TABLE [dbo].[Block_list] CHECK CONSTRAINT [FK_Block_list_User]
+GO
+
+ALTER TABLE [dbo].[Block_list]  WITH CHECK ADD  CONSTRAINT [FK_Block_list_User1] FOREIGN KEY([UserID_blocked])
+REFERENCES [dbo].[User] ([UserID])
+GO
+
+ALTER TABLE [dbo].[Block_list] CHECK CONSTRAINT [FK_Block_list_User1]
+GO
+
+USE [Team:)]
+GO
+
+/****** Object:  Table [dbo].[Event]    Script Date: 9/29/2024 8:19:53 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Event](
+	[EventID] [int] NOT NULL,
+	[Name] [ntext] NOT NULL,
+	[Icon] [image] NOT NULL,
+ CONSTRAINT [PK_Event] PRIMARY KEY CLUSTERED 
+(
+	[EventID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+USE [Team:)]
+GO
+
+/****** Object:  Table [dbo].[Event_membership]    Script Date: 9/29/2024 8:20:12 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Event_membership](
+	[UserID] [int] NOT NULL,
+	[EventID] [int] NOT NULL,
+	[Role] [tinyint] NOT NULL,
+ CONSTRAINT [PK_Event_membership] PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC,
+	[EventID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Event_membership]  WITH CHECK ADD  CONSTRAINT [FK_Event_membership_Event] FOREIGN KEY([EventID])
+REFERENCES [dbo].[Event] ([EventID])
+GO
+
+ALTER TABLE [dbo].[Event_membership] CHECK CONSTRAINT [FK_Event_membership_Event]
+GO
+
+ALTER TABLE [dbo].[Event_membership]  WITH CHECK ADD  CONSTRAINT [FK_Event_membership_User] FOREIGN KEY([UserID])
+REFERENCES [dbo].[User] ([UserID])
+GO
+
+ALTER TABLE [dbo].[Event_membership] CHECK CONSTRAINT [FK_Event_membership_User]
+GO
+
+
+USE [Team:)]
+GO
+
+/****** Object:  Table [dbo].[Friendship]    Script Date: 9/29/2024 8:20:31 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Friendship](
+	[UserID_1] [int] NOT NULL,
+	[UserID_2] [int] NOT NULL,
+	[Status] [tinyint] NOT NULL,
+ CONSTRAINT [PK_Friendship] PRIMARY KEY CLUSTERED 
+(
+	[UserID_1] ASC,
+	[UserID_2] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Friendship]  WITH CHECK ADD  CONSTRAINT [FK_Friendship_User] FOREIGN KEY([UserID_1])
+REFERENCES [dbo].[User] ([UserID])
+GO
+
+ALTER TABLE [dbo].[Friendship] CHECK CONSTRAINT [FK_Friendship_User]
+GO
+
+ALTER TABLE [dbo].[Friendship]  WITH CHECK ADD  CONSTRAINT [FK_Friendship_User1] FOREIGN KEY([UserID_2])
+REFERENCES [dbo].[User] ([UserID])
+GO
+
+ALTER TABLE [dbo].[Friendship] CHECK CONSTRAINT [FK_Friendship_User1]
+GO
+
+
+USE [Team:)]
+GO
+
+/****** Object:  Table [dbo].[Task]    Script Date: 9/29/2024 8:22:10 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Task](
+	[TaskID] [int] NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[Deadline] [datetime] NULL,
+	[Exp_time] [datetime] NULL,
+	[Status] [tinyint] NOT NULL,
+	[EventID] [int] NOT NULL,
+ CONSTRAINT [PK_Task] PRIMARY KEY CLUSTERED 
+(
+	[TaskID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Task]  WITH CHECK ADD  CONSTRAINT [FK_Task_Event] FOREIGN KEY([EventID])
+REFERENCES [dbo].[Event] ([EventID])
+GO
+
+ALTER TABLE [dbo].[Task] CHECK CONSTRAINT [FK_Task_Event]
+GO
+
+
+USE [Team:)]
+GO
+
+/****** Object:  Table [dbo].[User]    Script Date: 9/29/2024 8:22:28 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[User](
+	[UserID] [int] NOT NULL,
+	[Name] [nchar](20) NOT NULL,
+	[Email] [nchar](40) NOT NULL,
+	[Password] [nchar](20) NOT NULL,
+	[ProfilePicture] [image] NOT NULL,
+ CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+
+USE [Team:)]
+GO
+
+/****** Object:  Table [dbo].[User_Task]    Script Date: 9/29/2024 8:22:41 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[User_Task](
+	[UserID] [int] NOT NULL,
+	[TaskID] [int] NOT NULL,
+ CONSTRAINT [PK_User_Task] PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC,
+	[TaskID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[User_Task]  WITH CHECK ADD  CONSTRAINT [FK_User_Task_Task] FOREIGN KEY([TaskID])
+REFERENCES [dbo].[Task] ([TaskID])
+GO
+
+ALTER TABLE [dbo].[User_Task] CHECK CONSTRAINT [FK_User_Task_Task]
+GO
+
+ALTER TABLE [dbo].[User_Task]  WITH CHECK ADD  CONSTRAINT [FK_User_Task_User] FOREIGN KEY([UserID])
+REFERENCES [dbo].[User] ([UserID])
+GO
+
+ALTER TABLE [dbo].[User_Task] CHECK CONSTRAINT [FK_User_Task_User]
+GO
+
+
+
+
+
