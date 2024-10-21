@@ -1,7 +1,84 @@
 USE [Team:)]
 GO
 
-/****** Object:  Table [dbo].[Block_list]    Script Date: 9/29/2024 8:12:02 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 10/21/2024 12:54:07 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[User](
+	[UserID] [int] NOT NULL,
+	[Name] [nchar](20) NOT NULL,
+	[Email] [nvarchar](254) NOT NULL,
+	[Password] [nchar](128) NOT NULL,
+	[ProfilePicture] [varbinary](max) NOT NULL,
+ CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+USE [Team:)]
+GO
+
+/****** Object:  Table [dbo].[Event]    Script Date: 10/21/2024 1:38:49 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Event](
+	[EventID] [int] NOT NULL,
+	[Name] [ntext] NOT NULL,
+	[Icon] [image] NOT NULL,
+ CONSTRAINT [PK_Event] PRIMARY KEY CLUSTERED 
+(
+	[EventID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+
+USE [Team:)]
+GO
+
+/****** Object:  Table [dbo].[Task]    Script Date: 10/21/2024 1:39:19 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Task](
+	[TaskID] [int] NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[Deadline] [datetime] NULL,
+	[Exp_time] [datetime] NULL,
+	[Status] [tinyint] NOT NULL,
+	[EventID] [int] NOT NULL,
+ CONSTRAINT [PK_Task] PRIMARY KEY CLUSTERED 
+(
+	[TaskID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Task]  WITH CHECK ADD  CONSTRAINT [FK_Task_Event] FOREIGN KEY([EventID])
+REFERENCES [dbo].[Event] ([EventID])
+GO
+
+ALTER TABLE [dbo].[Task] CHECK CONSTRAINT [FK_Task_Event]
+GO
+
+
+USE [Team:)]
+GO
+
+/****** Object:  Table [dbo].[Block_list]    Script Date: 10/21/2024 1:39:48 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -33,31 +110,11 @@ GO
 ALTER TABLE [dbo].[Block_list] CHECK CONSTRAINT [FK_Block_list_User1]
 GO
 
-USE [Team:)]
-GO
-
-/****** Object:  Table [dbo].[Event]    Script Date: 9/29/2024 8:19:53 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE [dbo].[Event](
-	[EventID] [int] NOT NULL,
-	[Name] [ntext] NOT NULL,
-	[Icon] [image] NOT NULL,
- CONSTRAINT [PK_Event] PRIMARY KEY CLUSTERED 
-(
-	[EventID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
 
 USE [Team:)]
 GO
 
-/****** Object:  Table [dbo].[Event_membership]    Script Date: 9/29/2024 8:20:12 PM ******/
+/****** Object:  Table [dbo].[Event_membership]    Script Date: 10/21/2024 1:40:26 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -94,7 +151,7 @@ GO
 USE [Team:)]
 GO
 
-/****** Object:  Table [dbo].[Friendship]    Script Date: 9/29/2024 8:20:31 PM ******/
+/****** Object:  Table [dbo].[Friendship]    Script Date: 10/21/2024 1:41:28 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -131,63 +188,7 @@ GO
 USE [Team:)]
 GO
 
-/****** Object:  Table [dbo].[Task]    Script Date: 9/29/2024 8:22:10 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE [dbo].[Task](
-	[TaskID] [int] NOT NULL,
-	[Name] [nvarchar](50) NOT NULL,
-	[Deadline] [datetime] NULL,
-	[Exp_time] [datetime] NULL,
-	[Status] [tinyint] NOT NULL,
-	[EventID] [int] NOT NULL,
- CONSTRAINT [PK_Task] PRIMARY KEY CLUSTERED 
-(
-	[TaskID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
-ALTER TABLE [dbo].[Task]  WITH CHECK ADD  CONSTRAINT [FK_Task_Event] FOREIGN KEY([EventID])
-REFERENCES [dbo].[Event] ([EventID])
-GO
-
-ALTER TABLE [dbo].[Task] CHECK CONSTRAINT [FK_Task_Event]
-GO
-
-
-USE [Team:)]
-GO
-
-/****** Object:  Table [dbo].[User]    Script Date: 9/29/2024 8:22:28 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE [dbo].[User](
-	[UserID] [int] NOT NULL,
-	[Name] [nchar](20) NOT NULL,
-	[Email] [nchar](40) NOT NULL,
-	[Password] [nchar](20) NOT NULL,
-	[ProfilePicture] [image] NOT NULL,
- CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
-(
-	[UserID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-
-
-USE [Team:)]
-GO
-
-/****** Object:  Table [dbo].[User_Task]    Script Date: 9/29/2024 8:22:41 PM ******/
+/****** Object:  Table [dbo].[User_Task]    Script Date: 10/21/2024 1:41:55 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -218,8 +219,5 @@ GO
 
 ALTER TABLE [dbo].[User_Task] CHECK CONSTRAINT [FK_User_Task_User]
 GO
-
-
-
 
 
