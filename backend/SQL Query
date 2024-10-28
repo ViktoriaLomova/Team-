@@ -1,1 +1,101 @@
+Event CRUD
 
+INSERT INTO [dbo].[Event] (EventID, Name, Icon)
+VALUES (1, N'My Event', NULL);
+
+SELECT * FROM [dbo].[Event];
+
+UPDATE [dbo].[Event]
+SET Name = N'Updated Event Name', Icon = NULL -- Or provide binary data for the Icon
+WHERE EventID = 1;
+
+DELETE FROM [dbo].[Event]
+WHERE EventID = 1;
+
+Task CRUD
+
+INSERT INTO [dbo].[Task] (TaskID, Name, Deadline, Exp_time, Status, EventID)
+VALUES (1, N'My Task', '2024-12-31', '2024-12-01', 0, 1);
+
+SELECT * FROM [dbo].[Task]
+WHERE TaskID = 1;
+
+UPDATE [dbo].[Task]
+SET Name = N'Updated Task Name', Deadline = '2024-11-30', Status = 1
+WHERE TaskID = 1;
+
+DELETE FROM [dbo].[Task]
+WHERE TaskID = 1;
+
+User CRUD
+
+INSERT INTO [dbo].[User] (UserID, Name, Email, Password, ProfilePicture)
+VALUES (1, N'John Doe', N'johndoe@example.com', N'hashed_password', NULL);
+
+SELECT * FROM [dbo].[User]
+WHERE UserID = 1;
+
+UPDATE [dbo].[User]
+SET Name = N'Jane Doe', Email = N'janedoe@example.com'
+WHERE UserID = 1;
+
+DELETE FROM [dbo].[User]
+WHERE UserID = 1;
+
+Block_List CRUD
+
+INSERT INTO [dbo].[Block_list] (UserID_blocker, UserID_blocked)
+VALUES (1, 2);
+
+SELECT * FROM [dbo].[Block_list]
+WHERE UserID_blocker = 1;
+
+-
+
+DELETE FROM [dbo].[Block_list]
+WHERE UserID_blocker = 1 AND UserID_blocked = 2; 
+
+EventMembership CRUD
+
+INSERT INTO [dbo].[Event_membership] (UserID, EventID, Role)
+VALUES (1, 1, 0);
+
+SELECT * FROM [dbo].[Event_membership]
+WHERE UserID = 1;
+
+UPDATE [dbo].[Event_membership]
+SET Role = 1
+WHERE UserID = 1 AND EventID = 1;
+
+DELETE FROM [dbo].[Event_membership]
+WHERE UserID = 1 AND EventID = 1; 
+
+Friendship CRUD
+
+INSERT INTO [dbo].[Friendship] (UserID_1, UserID_2, Status)
+VALUES (1, 2, 0);
+
+SELECT * FROM [dbo].[Friendship]
+WHERE UserID_1 = 1; 
+
+UPDATE [dbo].[Friendship]
+SET Status = 1
+WHERE UserID_1 = 1 AND UserID_2 = 2;
+
+DELETE FROM [dbo].[Friendship]
+WHERE UserID_1 = 1 AND UserID_2 = 2;
+
+User_Task
+
+INSERT INTO [dbo].[User_Task] (UserID, TaskID)
+VALUES (1, 101);
+
+SELECT * FROM [dbo].[User_Task]
+WHERE UserID = 1;
+
+UPDATE [dbo].[User_Task]
+SET TaskID = 102
+WHERE UserID = 1 AND TaskID = 101;
+
+DELETE FROM [dbo].[User_Task]
+WHERE UserID = 1 AND TaskID = 101;
