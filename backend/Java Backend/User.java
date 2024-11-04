@@ -5,6 +5,43 @@ public class User {
     Integer userId;
     String name,email,password;
     Byte[] profilePicture;
+    User[] userBlockedUsers;
+    User[] userFriendships;
+    Task[] userTasks;
+    Event[] userEvents;
+
+    public User[] getUserBlockedUsers() {
+        return userBlockedUsers;
+    }
+
+    public void setUserBlockedUsers(User[] userBlockedUsers) {
+        this.userBlockedUsers = userBlockedUsers;
+    }
+
+    public User[] getUserFriendships() {
+        return userFriendships;
+    }
+
+    public void setUserFriendships(User[] userFriendships) {
+        this.userFriendships = userFriendships;
+    }
+
+    public Task[] getUserTasks() {
+        return userTasks;
+    }
+
+    public void setUserTasks(Task[] userTasks) {
+        this.userTasks = userTasks;
+    }
+
+    public Event[] getUserEvents() {
+        return userEvents;
+    }
+
+    public void setUserEvents(Event[] userEvents) {
+        this.userEvents = userEvents;
+    }
+    
 
     public Integer getUserId() {
         return userId;
@@ -46,16 +83,17 @@ public class User {
         this.profilePicture = profilePicture;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(getUserId(), user.getUserId()) && Objects.equals(getName(), user.getName()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPassword(), user.getPassword()) && Objects.deepEquals(getProfilePicture(), user.getProfilePicture());
+        return Objects.equals(getUserId(), user.getUserId()) && Objects.equals(getName(), user.getName()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPassword(), user.getPassword()) && Objects.deepEquals(getProfilePicture(), user.getProfilePicture()) && Objects.deepEquals(getUserBlockedUsers(), user.getUserBlockedUsers()) && Objects.deepEquals(getUserFriendships(), user.getUserFriendships()) && Objects.deepEquals(getUserTasks(), user.getUserTasks()) && Objects.deepEquals(getUserEvents(), user.getUserEvents());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getName(), getEmail(), getPassword(), Arrays.hashCode(getProfilePicture()));
+        return Objects.hash(getUserId(), getName(), getEmail(), getPassword(), Arrays.hashCode(getProfilePicture()), Arrays.hashCode(getUserBlockedUsers()), Arrays.hashCode(getUserFriendships()), Arrays.hashCode(getUserTasks()), Arrays.hashCode(getUserEvents()));
     }
 }
