@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="LoginPage.css">
+</head>
+<body>
+  <div>
+    <img src="grad1.png" alt="First Background" class="image1">
+    <img src="grad2.png" alt="Second Background" class="image2">
+    <div class="container">
+      <div class="login-box">
+        <h2>Hello</h2>
+        <h3>Sign In to your account</h3>
+        <form action="/login" method="POST">
+          <div class="input-box">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder=" "
+              required
+            />
+            <label for="username">Username</label>
+            <p id="errorMessage-username" class="error-message" style="display: none;">Invalid username</p>
+            <i class="icon bx bx-user"></i>
+          </div>
+          <div class="input-box">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder=" "
+              required
+            />
+            <label for="password">Password</label>
+            <p id="errorMessage-password" class="error-message" style="display: none;">Invalid password</p>
+            <i class="icon bx bx-lock-alt"></i>
+          </div>
+          <div class="remember-forgot">
+            <div class="remember-me">
+              <input type="checkbox" id="remember" name="remember" class="custom-checkbox">
+              <label for="remember">Remember me</label>
+            </div>
+            <div class="forgot-password">
+              <a href="#">Forgot Password?</a>
+            </div>
+          </div>
+          <button type="submit" class="btn">Sign In</button>
+          <div class="text-button-container">
+            <span class="info-text">Don’t have an account?</span>
+            <button type="button" class="create-button">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
